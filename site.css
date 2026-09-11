@@ -35,8 +35,8 @@
   --line:#e2e0d9;
   --brand:#d10921;
   --dark:#510710;
-  --radius-lg:18px;
-  --radius-sm:4px;
+  --radius-lg:0;
+  --radius-sm:0;
   --serif:Georgia,"Times New Roman",serif;
   --sans:Arial,"Helvetica Neue",sans-serif;
 }
@@ -82,8 +82,8 @@ h1,h2,h3,.title{font-family:var(--serif);color:var(--dark);margin:0}
 .hero-media{min-height:530px;border-radius:var(--radius-lg);overflow:hidden;background-size:cover;background-position:center;position:relative}
 .hero-media:after{content:"";position:absolute;inset:auto 0 0;height:45%;background:linear-gradient(transparent,rgba(0,0,0,.75))}
 .media-note{position:absolute;z-index:2;left:24px;right:24px;bottom:22px;color:#fff;display:flex;justify-content:space-between}
-.figs{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);margin-top:44px}
-.fig{padding:22px 16px 0 0}
+.figs{margin-top:44px}
+.fig{padding:20px 18px}
 .fig b{font-family:var(--serif);font-size:31px;display:block;color:var(--dark)}
 .fig span{font-size:12px;color:var(--muted)}
 
@@ -97,11 +97,16 @@ h1,h2,h3,.title{font-family:var(--serif);color:var(--dark);margin:0}
 .sec-head p{max-width:450px;color:var(--muted);margin:0}
 
 /* ---- Сетки и карточки ----------------------------------------------------- */
-.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-/* Модификатор для сеток из голых текстовых блоков (без рамки/фото) —
-   без визуальной границы элементам нужен воздух вместо линии-разделителя. */
-.grid-loose{row-gap:32px;column-gap:32px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+/* Модификатор «рамочной» сетки — общие линии между ячейками вместо гэпа,
+   как в спецификации/прайс-листе. Один приём, переиспользуется везде,
+   где контент представляет собой параллельные однородные данные:
+   статистика в герое, сегменты клиентов, шаги процесса поставки. */
+.grid-framed{gap:0;border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.grid-framed>*{border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.on-dark .grid-framed{border-color:rgba(255,255,255,.2)}
+.on-dark .grid-framed>*{border-color:rgba(255,255,255,.2)}
 .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden}
 .card-pad{padding:25px}
 .card h3{font-size:27px;line-height:1.12;margin-bottom:12px}
@@ -113,24 +118,25 @@ h1,h2,h3,.title{font-family:var(--serif);color:var(--dark);margin:0}
 
 /* ---- Иконки: одна система на базе Lucide (ISC), инлайн SVG --------------
    .icon — сам символ (наследует размер и цвет от контейнера).
-   .icon-badge — кружок-бейдж с иконкой: единственный визуальный якорь для
-   сегментов и шагов процесса вместо цифр/линий. Не варьируется по секции —
-   одинаковый брендовый кружок и на тёмном, и на светлом фоне. */
+   .icon-badge — квадратная плашка с обводкой: единственный визуальный якорь
+   для сегментов и шагов процесса вместо цифр/линий. Обводка, не заливка —
+   спокойнее и строже; одинаково работает и на тёмном, и на светлом фоне,
+   потому что цвет всегда брендовый, а не завязан на фон секции. */
 .icon{width:24px;height:24px;display:block}
-.icon-badge{width:64px;height:64px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
-.icon-badge .icon{width:30px;height:30px}
+.icon-badge{width:52px;height:52px;border:1.5px solid var(--brand);color:var(--brand);display:flex;align-items:center;justify-content:center;margin-bottom:22px}
+.icon-badge .icon{width:24px;height:24px}
 .icon-sm{width:18px;height:18px;color:var(--brand);flex:none}
 
-/* Сегменты клиентов — категории, не процесс: без нумерации и без
-   декоративной линии-разделителя, структуру задаёт сетка. Якорь — иконка. */
-.segment{padding:0 18px 0 0}
-.segment h3{font-size:25px;margin-bottom:8px}
+/* Сегменты клиентов — категории, не процесс: без нумерации, якорь — иконка.
+   Отступ даёт рамка ячейки (.grid-framed), не сам компонент. */
+.segment{padding:28px 24px}
+.segment h3{font-size:24px;margin-bottom:8px}
 .segment p{color:var(--muted-inv);margin:0}
 
 /* Шаги процесса поставки — реальная последовательность; порядок читается
    из расположения в сетке и иконок, отдельный номер не нужен. */
-.process-step{padding:0 18px 0 0}
-.process-step h3{font-size:22px;margin-bottom:8px}
+.process-step{padding:28px 24px}
+.process-step h3{font-size:21px;margin-bottom:8px}
 .process-step p{color:var(--muted);margin:0}
 
 /* Список клиентов — текстом, без имитации логотипов. */
