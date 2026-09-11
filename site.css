@@ -300,3 +300,17 @@ h1,h2,h3,.title{font-family:var(--serif);color:var(--ink);margin:0}
   .story-row .story-media,.page-hero-grid .ph-media{order:-1}
 }
 @media(max-width:540px){.prods{grid-template-columns:1fr}}
+
+/* ---- Витрина-карусель (адаптация Berghaus New Arrivals/Best Sellers) ---- */
+[hidden]{display:none!important}
+.showcase .tabs{display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--line);margin-bottom:26px}
+.carousel-nav{margin-left:auto;display:flex;gap:8px;padding-bottom:8px}
+.cnav{width:44px;height:44px;border:1px solid var(--line);background:#fff;color:var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.cnav:hover{border-color:var(--ink)}
+.cnav:disabled{opacity:.3;cursor:default}
+.cnav .icon{width:20px;height:20px}
+.track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none}
+.track::-webkit-scrollbar{display:none}
+.track>.prod{scroll-snap-align:start;flex:0 0 calc((100% - 48px)/4)}
+@media(max-width:900px){.track>.prod{flex-basis:calc((100% - 16px)/2)}}
+@media(max-width:540px){.track>.prod{flex-basis:86%}}
