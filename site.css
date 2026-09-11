@@ -21,7 +21,7 @@
      --radius-sm  интерактивные элементы: кнопки, поля ввода
 
    Шрифт
-     --serif      заголовки (Georgia)
+     --serif      заголовки (Spectral)
      --sans       текст интерфейса (Arial)
 
    Шаг сетки/отступов: 8 · 12 · 16 · 20 · 24 · 32 · 40 · 56 · 72 · 96
@@ -37,8 +37,8 @@
   --brand:#d10921;
   --radius-lg:0;
   --radius-sm:0;
-  --serif:Georgia,"Times New Roman",serif;
-  --sans:Arial,"Helvetica Neue",sans-serif;
+  --serif:'Spectral',Georgia,"Times New Roman",serif;
+  --sans:'Manrope',Arial,"Helvetica Neue",sans-serif;
 }
 
 *{box-sizing:border-box}
@@ -216,3 +216,24 @@ h1,h2,h3,.title{font-family:var(--serif);color:var(--ink);margin:0}
   .sec-head h2,.title{font-size:34px}
   .hero-grid{gap:22px}
 }
+
+/* ---- Каталог: 12 категорий + раскрывающийся список позиций --------------
+   Не сетка-рамка, а отдельные карточки с align-items:start — раскрытие
+   одной категории растит только её высоту, не тянет соседей. */
+.cats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:start}
+.cat{border:1px solid var(--line);padding:26px 24px;display:flex;flex-direction:column}
+.cat .icon-badge{margin-bottom:16px}
+.cat h3{font-size:21px;line-height:1.1;margin-bottom:6px}
+.cat .count{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.cat details{margin-top:16px}
+.cat summary{cursor:pointer;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1.2px;color:var(--brand);list-style:none;user-select:none}
+.cat summary::-webkit-details-marker{display:none}
+.cat summary::before{content:"+ "}
+.cat details[open] summary::before{content:"– "}
+.cat details[open] summary{margin-bottom:10px}
+.cat ul{margin:0;padding:0;list-style:none}
+.cat li{font-size:13px;color:var(--ink);padding:7px 0;border-top:1px solid var(--line);line-height:1.35}
+.cat .link{margin-top:auto;padding-top:18px}
+.clients-head{margin-top:58px}
+@media(max-width:900px){.cats{grid-template-columns:1fr 1fr}}
+@media(max-width:540px){.cats{grid-template-columns:1fr}}
