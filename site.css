@@ -231,6 +231,9 @@ p,.lead{text-wrap:pretty}
 .facet-reset[disabled]{color:var(--muted);opacity:.55;cursor:default}
 
 .cat-main{padding:26px 0 0 30px;min-width:0}
+.cat-layout.no-facets{grid-template-columns:1fr}
+.no-facets .facets{display:none}
+.no-facets .cat-main{padding-left:0}
 .cat-bar{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding-bottom:18px;margin-bottom:26px;border-bottom:1px solid var(--line)}
 .cat-bar h2{font-size:30px;letter-spacing:-1px}
 .cat-bar .n{margin-top:5px;font-size:13px;color:var(--muted)}

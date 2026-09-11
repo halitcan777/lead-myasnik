@@ -57,7 +57,7 @@
         countEl=cx.querySelector('[data-cat-count]'),
         emptyEl=cx.querySelector('.cat-empty'),
         sortEl=cx.querySelector('[data-sort]'),
-        FACETS=[['state','Состояние'],['pack','Фасовка'],['brand','Производитель']],
+        FACETS=[['state','Состояние'],['cut','Разделка'],['pack','Фасовка'],['brand','Производитель']],
         cur=tiles[0].getAttribute('data-cat'), picked={};
 
     function plural(n){var a=n%10,b=n%100;
@@ -86,7 +86,10 @@
           if(!(v in counts)){counts[v]=0;order.push(v);}
           counts[v]++;
         });
-        if(order.length<2)return;
+        // Группа бесполезна, только если значение одно и оно есть у всех:
+        // «Без кости (9 из 13)» — рабочий фильтр, «Охлаждённое (3 из 3)» — нет.
+        var total=0; prods.forEach(function(p){if(inCat(p))total++;});
+        if(!order.length||(order.length===1&&counts[order[0]]===total))return;
         groups++;
         html+='<div class="facet"><h4>'+f[1]+'</h4>';
         order.forEach(function(v){
@@ -99,6 +102,8 @@
         ? '<details class="fbox"'+(open?' open':'')+'><summary>Фильтры</summary>'+html+
           '<button class="facet-reset" type="button" data-reset disabled>Сбросить фильтры</button></details>'
         : '';
+      // Категории вроде «Яйцо» фильтровать нечем — колонка не должна зиять пустой.
+      cx.querySelector('.cat-layout').classList.toggle('no-facets',!groups);
     }
     function apply(){
       var n=0;
