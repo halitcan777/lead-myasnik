@@ -71,14 +71,19 @@ h1,h2,h3,.title{font-family:var(--serif);color:var(--ink);margin:0}
 .mobile-nav{display:none}
 
 /* ---- Герой --------------------------------------------------------------- */
-.hero{padding:72px 0 62px}
-.hero-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:34px;align-items:stretch}
+.hero{padding:72px 0 62px;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:34px;align-items:center}
 .hero h1{font-size:70px;line-height:.98;letter-spacing:-3.5px;margin-bottom:22px}
 .lead{font-size:19px;color:var(--muted);max-width:650px;margin:0}
 .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
-.hero-media{min-height:530px;border-radius:var(--radius-lg);overflow:hidden;background-size:cover;background-position:center;position:relative}
-.hero-media:after{content:"";position:absolute;inset:auto 0 0;height:45%;background:linear-gradient(transparent,rgba(0,0,0,.75))}
-.media-note{position:absolute;z-index:2;left:24px;right:24px;bottom:22px;color:#fff;display:flex;justify-content:space-between}
+/* Товар вместо картинки в рамке — вырезанный кадр, вылезающий за колонку
+   к краю экрана. Высота ячейки фиксирована, у картинки задана только
+   height:100% — перетекание строго горизонтальное, без наезда на подпись
+   снизу; ширина сама следует из пропорций кадра. */
+.hero-shot{position:relative;height:480px}
+.hero-cutout{position:absolute;top:0;left:0;height:100%;width:auto;max-width:none;filter:drop-shadow(0 22px 26px rgba(36,38,43,.22)) drop-shadow(0 4px 8px rgba(36,38,43,.16))}
+.shot-tag{display:flex;align-items:baseline;gap:10px;margin-top:20px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+.shot-tag b{font-family:var(--serif);font-size:15px;color:var(--ink);text-transform:uppercase;letter-spacing:.5px}
 .figs{margin-top:44px}
 .fig{padding:20px 18px}
 .fig b{font-family:var(--serif);font-size:31px;display:block;color:var(--ink)}
@@ -186,7 +191,9 @@ h1,h2,h3,.title{font-family:var(--serif);color:var(--ink);margin:0}
   .hero{padding:40px 0}
   .hero-grid,.cta,.banner{grid-template-columns:1fr}
   .hero h1{font-size:48px}
-  .hero-media{min-height:380px}
+  .hero-shot{height:auto;margin-top:28px}
+  .hero-cutout{position:static;height:auto;width:100%;filter:drop-shadow(0 16px 20px rgba(36,38,43,.2))}
+  .shot-tag{margin-top:14px}
   .figs,.grid4,.grid3{grid-template-columns:1fr 1fr}
   .filter-row{grid-template-columns:1fr}
   .sec-head{display:block}
@@ -200,7 +207,6 @@ h1,h2,h3,.title{font-family:var(--serif);color:var(--ink);margin:0}
 @media(max-width:540px){
   .figs,.grid4,.grid3,.foot-grid{grid-template-columns:1fr}
   .hero h1{font-size:40px}
-  .hero-media{min-height:310px}
   .sec-head h2,.title{font-size:34px}
   .hero-grid{gap:22px}
 }
