@@ -237,3 +237,66 @@ h1,h2,h3,.title{font-family:var(--serif);color:var(--ink);margin:0}
 .clients-head{margin-top:58px}
 @media(max-width:900px){.cats{grid-template-columns:1fr 1fr}}
 @media(max-width:540px){.cats{grid-template-columns:1fr}}
+
+/* ================= МНОГОСТРАНИЧНИК ================= */
+.nav a.active{color:var(--ink)}
+.nav a.active::after{content:"";display:block;height:2px;background:var(--brand);margin-top:5px}
+.center{text-align:center;margin-top:34px}
+.ph-kick,.st-kick{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--brand);margin-bottom:14px}
+.page-hero{padding:64px 0 44px}
+.page-hero h1{font-size:56px;line-height:1.02;letter-spacing:-2px;margin:0 0 18px}
+.page-hero .lead{max-width:720px}
+.page-hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center}
+.ph-media,.story-media{aspect-ratio:3/2;border:1px solid var(--line);overflow:hidden}
+.ph-media img,.story-media img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* Две плитки-развилки */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.split-tile{position:relative;min-height:420px;display:flex;align-items:flex-end;overflow:hidden;border:1px solid var(--line);color:#fff}
+.split-tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.split-tile::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(20,21,24,.12),rgba(20,21,24,.85))}
+.split-tile .st-in{position:relative;z-index:2;padding:36px}
+.split-tile h2{color:#fff;font-size:34px;line-height:1.04;margin:0 0 10px}
+.split-tile p{color:rgba(255,255,255,.82);margin:0 0 16px;max-width:430px}
+.split-tile .st-kick{color:#fff;opacity:.92}
+.st-link{display:inline-flex;align-items:center;gap:8px;font-weight:800;text-transform:uppercase;letter-spacing:1px;font-size:13px}
+.side-facts{display:flex;flex-direction:column}
+.fact{display:flex;gap:18px;padding:24px 0;border-top:1px solid var(--line)}
+.fact:first-child{border-top:0;padding-top:0}
+.fact .icon-badge{margin-bottom:0;flex:none}
+.fact h3{font-size:20px;margin:0 0 6px}
+.fact p{color:var(--muted);margin:0}
+
+/* Витрина: вкладки + карточки товара */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:30px}
+.tab-btn{padding:14px 20px;font-weight:800;font-size:15px;background:none;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer;color:var(--muted)}
+.tab-btn.active{color:var(--ink);border-bottom-color:var(--brand)}
+.tab-panel{display:none}
+.tab-panel.is-active{display:grid}
+.prods{grid-template-columns:repeat(4,1fr);gap:16px}
+.prod{position:relative;border:1px solid var(--line);display:flex;flex-direction:column}
+.prod .ph{aspect-ratio:4/3;background:#f4f4f5;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line)}
+.prod .icon-ph{width:46px;height:46px;color:#c9c9cd}
+.prod .pbadge{position:absolute;top:12px;left:12px;background:var(--brand);color:#fff;font-size:11px;font-weight:800;letter-spacing:.5px;padding:5px 9px;text-transform:uppercase;z-index:2}
+.prod .p-pad{padding:18px;display:flex;flex-direction:column;flex:1}
+.prod h3{font-size:16px;line-height:1.2;margin:0 0 6px}
+.prod .meta{font-size:12px;color:var(--muted)}
+.prod .price{font-weight:700;margin-top:10px;font-family:var(--serif)}
+.prod .link{margin-top:14px;padding-top:0}
+
+/* Реквизиты, story */
+.req{margin-top:24px;padding:18px 20px;border:1px solid var(--line);font-size:13px;color:var(--muted)}
+.story-row{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;padding:52px 0;border-top:1px solid var(--line)}
+.story-row:first-child{border-top:0}
+.story-text h2{font-size:38px;line-height:1.05;letter-spacing:-1.5px;margin:0 0 16px}
+.story-text p{color:var(--muted);margin:0;font-size:17px}
+
+@media(max-width:900px){
+  .split,.page-hero-grid,.story-row{grid-template-columns:1fr}
+  .split-tile{min-height:320px}
+  .prods{grid-template-columns:1fr 1fr}
+  .page-hero h1{font-size:40px}
+  .story-text h2{font-size:30px}
+  .story-row .story-media,.page-hero-grid .ph-media{order:-1}
+}
+@media(max-width:540px){.prods{grid-template-columns:1fr}}
