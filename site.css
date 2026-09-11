@@ -68,7 +68,8 @@ h1,h2,h3,.title{font-family:var(--serif);color:var(--dark);margin:0}
 .logo{font-size:24px;font-weight:900;letter-spacing:-1px;line-height:.85;color:var(--ink)}
 .logo small{display:block;font-size:9px;letter-spacing:1.7px;margin-top:7px;font-weight:600;color:var(--muted)}
 .nav{display:flex;gap:26px;margin-left:auto;font-size:14px;font-weight:600}
-.phone{font-weight:800;white-space:nowrap}
+.phone{display:inline-flex;align-items:center;gap:8px;font-weight:800;white-space:nowrap}
+.phone .icon-sm{color:inherit}
 .burger{display:none;margin-left:auto;border:0;background:none;font-size:28px}
 .mobile-nav{display:none}
 
@@ -98,6 +99,9 @@ h1,h2,h3,.title{font-family:var(--serif);color:var(--dark);margin:0}
 /* ---- Сетки и карточки ----------------------------------------------------- */
 .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+/* Модификатор для сеток из голых текстовых блоков (без рамки/фото) —
+   без визуальной границы элементам нужен воздух вместо линии-разделителя. */
+.grid-loose{row-gap:32px;column-gap:32px}
 .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden}
 .card-pad{padding:25px}
 .card h3{font-size:27px;line-height:1.12;margin-bottom:12px}
@@ -107,19 +111,34 @@ h1,h2,h3,.title{font-family:var(--serif);color:var(--dark);margin:0}
 .card .photo--muted{filter:saturate(.65)}
 .link{display:inline-block;margin-top:20px;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1.4px}
 
-/* Сегменты клиентов — категории, не процесс: без нумерации. */
-.segment{border-top:1px solid #4b4c46;padding:22px 18px 28px 0}
+/* ---- Иконки: одна система на базе Lucide (ISC), инлайн SVG --------------
+   .icon — сам символ (наследует размер и цвет от контейнера).
+   .icon-badge — кружок-бейдж с иконкой: единственный визуальный якорь для
+   сегментов и шагов процесса вместо цифр/линий. Не варьируется по секции —
+   одинаковый брендовый кружок и на тёмном, и на светлом фоне. */
+.icon{width:24px;height:24px;display:block}
+.icon-badge{width:64px;height:64px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.icon-badge .icon{width:30px;height:30px}
+.icon-sm{width:18px;height:18px;color:var(--brand);flex:none}
+
+/* Сегменты клиентов — категории, не процесс: без нумерации и без
+   декоративной линии-разделителя, структуру задаёт сетка. Якорь — иконка. */
+.segment{padding:0 18px 0 0}
 .segment h3{font-size:25px;margin-bottom:8px}
 .segment p{color:var(--muted-inv);margin:0}
 
-/* Шаги процесса поставки — реальная последовательность, поэтому с номером. */
-.process-step{border-top:1px solid var(--line);padding:22px 18px 0 0}
-.process-step b{font-family:var(--serif);font-size:40px;color:var(--brand);display:block}
-.process-step h3{font-size:22px;margin:10px 0 8px}
+/* Шаги процесса поставки — реальная последовательность; порядок читается
+   из расположения в сетке и иконок, отдельный номер не нужен. */
+.process-step{padding:0 18px 0 0}
+.process-step h3{font-size:22px;margin-bottom:8px}
 .process-step p{color:var(--muted);margin:0}
 
 /* Список клиентов — текстом, без имитации логотипов. */
 .client-names{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:42px;font-family:var(--serif);font-size:19px;color:var(--muted-inv)}
+
+/* Мелкие инлайн-иконки при подписях (контакты, телефоны, документы). */
+.icon-line{display:flex;align-items:flex-start;gap:10px}
+.icon-line .icon-sm{margin-top:3px}
 
 /* ---- Форма запроса прайса ---------------------------------------------- */
 .filter{border:1px solid var(--line);border-top:3px solid var(--brand);padding:28px;background:#ebeae4}
@@ -132,13 +151,14 @@ h1,h2,h3,.title{font-family:var(--serif);color:var(--dark);margin:0}
 .banner{display:grid;grid-template-columns:1fr auto;align-items:center;gap:28px;padding:36px 34px;margin-top:34px;border-radius:var(--radius-lg);color:#fff}
 .banner--dark{background:var(--dark)}
 .banner--brand{background:var(--brand)}
-.banner h3{font-size:30px;margin-bottom:8px;color:#fff}
+.banner h3{display:flex;align-items:center;gap:12px;font-size:30px;margin-bottom:8px;color:#fff}
+.banner h3 .icon{width:26px;height:26px}
 .banner p{color:var(--muted-inv);margin:0;max-width:440px}
-
-.client-names{margin-top:42px}
 
 /* ---- Контакты ------------------------------------------------------------- */
 .cta{display:grid;grid-template-columns:1fr .8fr;gap:50px;align-items:start}
+.contact-list{margin-top:20px;display:flex;flex-direction:column;gap:10px}
+.contact-list p{margin:0}
 .form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .form .field{height:56px}
 .form textarea{grid-column:1/-1;min-height:120px;padding:16px;border-radius:var(--radius-sm)}
@@ -148,6 +168,7 @@ h1,h2,h3,.title{font-family:var(--serif);color:var(--dark);margin:0}
 .footer{background:var(--dark);color:#fff;padding:55px 0 28px}
 .footer .logo{color:#fff}
 .footer .logo small{color:var(--muted-inv)}
+.footer .phone{display:inline-flex;margin:7px 0}
 .foot-grid{display:grid;grid-template-columns:1.25fr repeat(3,1fr);gap:35px}
 .footer h4{margin:0 0 14px}
 .footer a,.footer p{color:var(--muted-inv);font-size:14px;display:block;margin:7px 0}
