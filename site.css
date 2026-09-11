@@ -80,7 +80,7 @@ h1,h2,h3,.title{font-family:var(--serif);color:var(--ink);margin:0}
    к краю экрана. Высота ячейки фиксирована, у картинки задана только
    height:100% — перетекание строго горизонтальное, без наезда на подпись
    снизу; ширина сама следует из пропорций кадра. */
-.hero-shot{position:relative;height:480px}
+.hero-shot{position:relative;height:400px}
 .hero-cutout{position:absolute;top:0;left:0;height:100%;width:auto;max-width:none;filter:drop-shadow(0 22px 26px rgba(36,38,43,.22)) drop-shadow(0 4px 8px rgba(36,38,43,.16))}
 .shot-tag{display:flex;align-items:baseline;gap:10px;margin-top:20px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
 .shot-tag b{font-family:var(--serif);font-size:15px;color:var(--ink);text-transform:uppercase;letter-spacing:.5px}
@@ -182,12 +182,18 @@ h1,h2,h3,.title{font-family:var(--serif);color:var(--ink);margin:0}
 .toast{position:fixed;right:20px;bottom:20px;background:var(--ink);color:#fff;padding:16px 20px;border-radius:var(--radius-sm);z-index:30;opacity:0;transform:translateY(20px);transition:.2s}
 .toast.show{opacity:1;transform:none}
 
-@media(max-width:900px){
-  .wrap{width:min(100% - 28px,680px)}
-  .topbar{display:none}
+/* Шапка ломается раньше, чем сетка контента: на 5 пунктов навигации +
+   телефон + кнопку не хватает места уже под 1180px, хотя герою и карточкам
+   там ещё вполне просторно. Поэтому переключение на бургер — отдельный,
+   более широкий брейкпоинт, не завязанный на брейкпоинт сетки ниже. */
+@media(max-width:1180px){
   .nav,.header .phone,.header .button{display:none}
   .burger{display:block}
   .mobile-nav.open{display:grid;padding:15px 0 25px;gap:14px}
+}
+@media(max-width:900px){
+  .wrap{width:min(100% - 28px,680px)}
+  .topbar{display:none}
   .hero{padding:40px 0}
   .hero-grid,.cta,.banner{grid-template-columns:1fr}
   .hero h1{font-size:48px}
