@@ -274,8 +274,8 @@ h1,h2,h3,.title{font-family:var(--serif);color:var(--ink);margin:0}
 .tab-panel{display:none}
 .tab-panel.is-active{display:grid}
 .prods{grid-template-columns:repeat(4,1fr);gap:16px}
-.prod{position:relative;border:1px solid var(--line);display:flex;flex-direction:column}
-.prod .ph{aspect-ratio:4/3;background:#f4f4f5;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line)}
+.prod{position:relative;border:1px solid var(--line);background:#f2f2f4;display:flex;flex-direction:column}
+.prod .ph{aspect-ratio:4/3;background:#fff;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line)}
 .prod .icon-ph{width:46px;height:46px;color:#c9c9cd}
 .prod .pbadge{position:absolute;top:12px;left:12px;background:var(--brand);color:#fff;font-size:11px;font-weight:800;letter-spacing:.5px;padding:5px 9px;text-transform:uppercase;z-index:2}
 .prod .p-pad{padding:18px;display:flex;flex-direction:column;flex:1}
