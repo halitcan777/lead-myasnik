@@ -187,6 +187,29 @@ p,.lead{text-wrap:pretty}
 .form textarea{grid-column:1/-1;min-height:120px;padding:16px;border-radius:var(--radius-sm)}
 .form .button{grid-column:1/-1}
 
+
+/* ---- Контакты: пара «что / значение» ------------------------------------
+   Было: пять строк с иконками подряд и заголовок формы, попавший в ячейку
+   сетки рядом с первым полем. Стало: подпись слева называет строку точнее
+   любого значка, линии идут во всю ширину колонки, заголовок формы вынесен
+   над полями. Шаг отступов внутри строки меньше, чем между строками. */
+.contacts{border-top:1px solid var(--line)}
+.c-row{display:grid;grid-template-columns:140px 1fr;gap:24px;padding:18px 0;border-bottom:1px solid var(--line)}
+.c-l{padding-top:3px;font-size:11px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted)}
+.c-v{display:flex;flex-direction:column;gap:6px;font-size:17px;min-width:0;overflow-wrap:anywhere}
+.c-v a{text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px}
+.c-v a:hover{color:var(--brand);text-decoration-color:var(--brand)}
+.c-s{font-size:15px;color:var(--muted)}
+.c-req{font-size:15px;color:var(--muted)}
+.c-req .c-s{font-size:14px}
+/* Заголовок и пояснение формы — на всю ширину сетки, а не в ячейке поля. */
+.cta .form{align-content:start;border:1px solid var(--line);padding:32px}
+.cta .form .title{grid-column:1/-1;margin-bottom:0;font-size:34px;letter-spacing:-1.2px}
+.form-note{grid-column:1/-1;margin:0 0 10px;color:var(--muted);font-size:14px}
+/* Футер: .footer p перебивал флексовую строку с иконкой — адрес и почта
+   уезжали под значок. */
+.footer .icon-line{display:flex}
+
 /* ---- Футер ------------------------------------------------------------------ */
 .footer{background:#fff;color:var(--ink);padding:55px 0 28px;border-top:1px solid var(--line)}
 .footer .logo{color:var(--ink)}
@@ -211,7 +234,9 @@ p,.lead{text-wrap:pretty}
 .cat{border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff;padding:0;margin:0;cursor:pointer;color:var(--ink);font:inherit;text-align:left;display:flex;flex-direction:column}
 .cat-ph{aspect-ratio:4/3;background:#fff;overflow:hidden}
 .cat-ph img{width:100%;height:100%;object-fit:contain;display:block}
-.cat-t{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:12px 14px;border-top:1px solid var(--line);font-size:13px;font-weight:700;line-height:1.25}
+/* min-height — чтобы подпись в две строки («Куриные полуфабрикаты»)
+   не делала свою плитку выше соседних: ряд должен читаться линией. */
+.cat-t{display:flex;align-items:baseline;justify-content:space-between;gap:10px;min-height:57px;padding:12px 14px;border-top:1px solid var(--line);font-size:13px;font-weight:700;line-height:1.25}
 .cat-t b{font-size:12px;font-weight:700;color:var(--muted)}
 .cat:hover .cat-t{color:var(--brand)}
 /* Выбранная категория — заливкой, а не рамкой: рамки тут и так везде. */
@@ -239,7 +264,10 @@ p,.lead{text-wrap:pretty}
 .cat-bar .n{margin-top:5px;font-size:13px;color:var(--muted)}
 .sortby{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);white-space:nowrap}
 .sortby select{height:44px;padding:0 12px;border:1px solid var(--line);border-radius:var(--radius-sm);background:#fff;color:var(--ink);font-weight:700}
-.cat-grid{grid-template-columns:repeat(3,1fr)}
+/* Колонок три, а не четыре: слева стоит колонка фильтров, и на остатке
+   ширины четвёртая карточка делает ряд мелким. Селектор с .cat-main —
+   чтобы не спорить с общим правилом .prods ниже по файлу. */
+.cat-main .cat-grid{grid-template-columns:repeat(3,1fr)}
 /* Карточка — флексовая, поэтому скрытие нужно объявить явно. */
 .prod[hidden]{display:none}
 /* Цена и кнопка прижаты к низу: названия разной длины не должны ломать ряд. */
@@ -264,6 +292,9 @@ p,.lead{text-wrap:pretty}
   .mobile-nav.open{display:grid;padding:15px 0 25px;gap:14px}
 }
 @media(max-width:900px){
+  .c-row{grid-template-columns:1fr;gap:6px;padding:14px 0}
+  .cta .form{padding:22px}
+  .cta .form .title{font-size:28px}
   .wrap{width:min(100% - 28px,680px)}
   .topbar{display:none}
   .hero{padding:40px 0}
@@ -289,26 +320,7 @@ p,.lead{text-wrap:pretty}
   .hero-grid{gap:22px}
 }
 
-/* ---- Каталог: 12 категорий + раскрывающийся список позиций --------------
-   Не сетка-рамка, а отдельные карточки с align-items:start — раскрытие
-   одной категории растит только её высоту, не тянет соседей. */
-.cats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:start}
-.cat{border:1px solid var(--line);padding:26px 24px;display:flex;flex-direction:column}
-.cat .icon-badge{margin-bottom:16px}
-.cat h3{font-size:21px;line-height:1.1;margin-bottom:6px}
-.cat .count{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
-.cat details{margin-top:16px}
-.cat summary{cursor:pointer;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1.2px;color:var(--brand);list-style:none;user-select:none}
-.cat summary::-webkit-details-marker{display:none}
-.cat summary::before{content:"+ "}
-.cat details[open] summary::before{content:"– "}
-.cat details[open] summary{margin-bottom:10px}
-.cat ul{margin:0;padding:0;list-style:none}
-.cat li{font-size:13px;color:var(--ink);padding:7px 0;border-top:1px solid var(--line);line-height:1.35}
-.cat .link{margin-top:auto;padding-top:18px}
 .clients-head{margin-top:58px}
-@media(max-width:900px){.cats{grid-template-columns:1fr 1fr}}
-@media(max-width:540px){.cats{grid-template-columns:1fr}}
 
 /* ================= МНОГОСТРАНИЧНИК ================= */
 .nav a.active{color:var(--ink)}
@@ -316,6 +328,9 @@ p,.lead{text-wrap:pretty}
 .center{text-align:center;margin-top:34px}
 .ph-kick,.st-kick{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--brand);margin-bottom:14px}
 .page-hero{padding:64px 0 44px}
+/* Заголовок страницы и первый блок под ним — одна связка: 44+76px
+   между ними читались как разрыв, а не как отступ. */
+.page-hero+.section{padding-top:40px}
 .page-hero h1{font-size:56px;line-height:1.02;letter-spacing:-2px;margin:0 0 18px}
 .page-hero .lead{max-width:720px}
 .page-hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center}
@@ -415,7 +430,7 @@ p,.lead{text-wrap:pretty}
 /* Каталог: сетка плиток и колонок отдельными шагами — фильтры уезжают вниз
    позже, чем ломается сетка карточек. */
 @media(max-width:1180px){.cats{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:1080px){.cat-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:1080px){.cat-main .cat-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:900px){
   .cats{grid-template-columns:repeat(3,1fr);margin-bottom:30px}
   .cat-layout{grid-template-columns:1fr}
@@ -432,6 +447,6 @@ p,.lead{text-wrap:pretty}
 }
 @media(max-width:540px){
   .cats{grid-template-columns:repeat(2,1fr)}
-  .cat-grid{grid-template-columns:1fr}
+  .cat-main .cat-grid{grid-template-columns:1fr}
   .cat-bar{flex-direction:column;align-items:flex-start;gap:14px}
 }
