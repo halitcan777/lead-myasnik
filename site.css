@@ -60,7 +60,8 @@ h1,h2,h3,.title,.sec-head p,.prod h3,.card h3{text-wrap:balance}
 p,.lead{text-wrap:pretty}
 
 /* ---- Кнопки ------------------------------------------------------------ */
-.button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border:1px solid var(--ink);border-radius:var(--radius-sm);font-weight:800;background:var(--ink);color:#fff;cursor:pointer}
+/* gap — чтобы иконка внутри кнопки не прилипала к тексту. */
+.button{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 22px;border:1px solid var(--ink);border-radius:var(--radius-sm);font-weight:800;background:var(--ink);color:#fff;cursor:pointer}
 .button.accent{background:var(--brand);color:#fff;border-color:var(--brand)}
 .button.ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
 .button.invert{background:#fff;color:var(--ink);border-color:#fff}
@@ -179,8 +180,11 @@ p,.lead{text-wrap:pretty}
 
 /* ---- Форма запроса прайса ---------------------------------------------- */
 .filter{border:1px solid var(--line);padding:28px;background:#f7f7f8}
-.filter .sec-head{margin-bottom:22px}
-.filter .sec-head h2{font-size:35px}
+/* В форме заголовок и пояснение идут в столбик: разнесённые по краям,
+   они висели на разной высоте и не читались как одна шапка блока. */
+.filter .sec-head{display:block;margin-bottom:22px}
+.filter .sec-head h2{font-size:35px;line-height:1.1}
+.filter .sec-head p{max-width:640px;margin-top:9px}
 .filter-row{display:grid;grid-template-columns:repeat(3,1fr) auto;gap:10px}
 .field{height:50px;border:1px solid var(--line);background:#fff;padding:0 16px;min-width:0;border-radius:var(--radius-sm)}
 
@@ -428,7 +432,9 @@ p,.lead{text-wrap:pretty}
 
 /* Реквизиты, story */
 .req{margin-top:24px;padding:18px 20px;border:1px solid var(--line);font-size:13px;color:var(--muted)}
-.story-row{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;padding:52px 0;border-top:1px solid var(--line)}
+/* Текст истории выравнивается по верху кадра, а не по его середине:
+   при центровании дата и заголовок повисали посреди фотографии. */
+.story-row{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;padding:52px 0;border-top:1px solid var(--line)}
 .story-row:first-child{border-top:0}
 .story-text h2{font-size:38px;line-height:1.05;letter-spacing:-1.5px;margin:0 0 16px}
 .story-text p{color:var(--muted);margin:0;font-size:17px}
