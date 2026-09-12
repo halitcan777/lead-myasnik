@@ -1,6 +1,9 @@
 (function(){
   var b=document.querySelector('.burger'), mn=document.querySelector('.mobile-nav');
-  if(b&&mn) b.addEventListener('click',function(){mn.classList.toggle('open');});
+  if(b&&mn) b.addEventListener('click',function(){
+    var open=mn.classList.toggle('open');
+    b.setAttribute('aria-expanded',open?'true':'false');
+  });
 
   function mask(v){var d=v.replace(/\D/g,'');if(d[0]==='8')d='7'+d.slice(1);if(d&&d[0]!=='7')d='7'+d;d=d.slice(0,11);var r='+7';if(d.length>1)r+=' ('+d.slice(1,4);if(d.length>=4)r+=') '+d.slice(4,7);if(d.length>=7)r+='-'+d.slice(7,9);if(d.length>=9)r+='-'+d.slice(9,11);return r;}
   document.querySelectorAll('input[data-phone]').forEach(function(i){

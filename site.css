@@ -81,10 +81,15 @@ p,.lead{text-wrap:pretty}
    надпись уезжает ниже строки меню на высоту знака. Зеркальный отступ
    снизу (знак + отбивка) возвращает надпись на общую линию с меню,
    телефоном и кнопкой, а знак остаётся значком над строкой. */
-.logo{display:flex;align-items:center;gap:10px;color:var(--ink)}
-.logo-mark{height:26px;width:auto;display:block;flex:none;order:2}
+/* Важное про пропорции: в картинке надписи буквы занимают только верхние
+   70% высоты — ниже уходит рукоять тесака в букве «К». Поэтому высота
+   картинки задаётся с запасом (31px), чтобы САМИ БУКВЫ были 22px, вровень
+   со знаком. Выравнивание по верху ставит знак на оптическую середину
+   букв, а зеркальный отступ сверху — всю связку на линию меню. */
+.logo{display:flex;align-items:flex-start;gap:10px;padding-top:9px;color:var(--ink)}
+.logo-mark{height:22px;width:auto;display:block;flex:none;order:2}
 .logo-w{display:block}
-.logo-w img{height:21px;width:auto;display:block}
+.logo-w img{height:31px;width:auto;display:block}
 /* Шапка читается как два блока: слева знак и меню при нём, справа —
    контактный блок из телефона и кнопки. Меню стоит сразу за логотипом
    (40px), внутри меню 26px, внутри контактов 20px, а весь свободный
@@ -96,7 +101,10 @@ p,.lead{text-wrap:pretty}
 .header-in .button{margin-left:20px}
 .phone{display:inline-flex;align-items:center;gap:8px;font-weight:800;white-space:nowrap}
 .phone .icon-sm{color:inherit}
-.burger{display:none;margin-left:auto;border:0;background:none;font-size:28px}
+/* Бургер рисуем иконкой, а не символом ☰: на iOS он подхватывается как
+   эмодзи — синий и со своей метрикой, из-за чего съезжает с линии. */
+.burger{display:none;align-items:center;justify-content:center;width:44px;height:44px;margin-left:auto;margin-right:-10px;padding:0;border:0;background:none;color:var(--ink);cursor:pointer}
+.burger .icon{width:26px;height:26px}
 .mobile-nav{display:none}
 
 /* ---- Герой --------------------------------------------------------------- */
@@ -219,7 +227,7 @@ p,.lead{text-wrap:pretty}
 
 /* ---- Футер ------------------------------------------------------------------ */
 .footer{background:#fff;color:var(--ink);padding:55px 0 28px;border-top:1px solid var(--line)}
-.footer .logo{color:var(--ink);margin-bottom:16px}
+.footer .logo{color:var(--ink);padding-top:0;margin-bottom:16px}
 .footer .logo small{color:var(--muted)}
 .footer .phone{display:inline-flex;margin:7px 0}
 .foot-grid{display:grid;grid-template-columns:1.25fr repeat(3,1fr);gap:35px}
@@ -327,7 +335,7 @@ p,.lead{text-wrap:pretty}
    более широкий брейкпоинт, не завязанный на брейкпоинт сетки ниже. */
 @media(max-width:1180px){
   .nav,.header .phone,.header .button{display:none}
-  .burger{display:block}
+  .burger{display:flex}
   .mobile-nav.open{display:grid;padding:15px 0 25px;gap:14px}
 }
 
