@@ -270,7 +270,10 @@ p,.lead{text-wrap:pretty}
 .cat-ph img{width:100%;max-width:100%;height:100%;object-fit:contain;display:block}
 /* min-height — чтобы подпись в две строки («Куриные полуфабрикаты»)
    не делала свою плитку выше соседних: ряд должен читаться линией. */
-.cat-t{min-width:0;display:flex;align-items:baseline;justify-content:space-between;gap:10px;min-height:57px;padding:12px 14px;border-top:1px solid var(--line);font-size:13px;font-weight:700;line-height:1.25}
+/* flex:1 — подпись занимает весь остаток ячейки. Иначе в ряду, который
+   растянут двухстрочной подписью соседа, под коротким названием остаётся
+   пустая полоса, и красная линия активной категории висит отдельно. */
+.cat-t{flex:1;min-width:0;display:flex;align-items:baseline;justify-content:space-between;gap:10px;min-height:57px;padding:12px 14px;border-top:1px solid var(--line);font-size:13px;font-weight:700;line-height:1.25}
 .cat-t b{font-size:12px;font-weight:700;color:var(--muted)}
 .cat:hover .cat-t{color:var(--brand)}
 /* Выбранная категория помечена так же, как активный пункт меню и вкладка
