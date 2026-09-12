@@ -76,9 +76,16 @@
       var n=0;
       prods.forEach(function(p){
         var show=p.getAttribute('data-cat')===cur;
-        p.hidden=!show; if(show)n++;
+        p.hidden=!show;
+        // Считаем позиции прайса, а не карточки: в одной карточке может
+        // лежать несколько вариантов одного товара от разных производителей.
+        if(show)n+=(+p.getAttribute('data-n')||1);
       });
       countEl.textContent=n+' '+plural(n);
+      // Одна-две карточки в сетке на четыре колонки висят в углу пустого
+      // ряда — в этом случае раскладываем их горизонтально, шире.
+      var shown=0; prods.forEach(function(p){if(!p.hidden)shown++;});
+      grid.classList.toggle('few',shown<=2);
     }
     function sortNow(){
       var v=sortEl?sortEl.value:'cat', arr=prods.slice();

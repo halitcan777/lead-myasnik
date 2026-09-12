@@ -300,6 +300,14 @@ p,.lead{text-wrap:pretty}
 .cat-main .cat-grid{grid-template-columns:repeat(4,1fr)}
 /* Карточка — флексовая, поэтому скрытие нужно объявить явно. */
 .prod[hidden]{display:none}
+/* Категория из одной-двух карточек: карточка занимает половину ряда и
+   раскладывается горизонтально — кадр слева, прайс справа. */
+.cat-grid.few .prod{grid-column:span 2;flex-direction:row}
+.cat-grid.few .prod .ph{flex:0 0 44%;aspect-ratio:auto;min-height:260px;border-bottom:0;border-right:1px solid var(--line)}
+.cat-grid.few .prod .p-pad{justify-content:center}
+.cat-grid.few .prod h3{font-size:19px}
+.cat-grid.few .prod .price{margin-top:16px}
+
 /* Цена и кнопка прижаты к низу: названия разной длины не должны ломать ряд. */
 .cat-grid .prod .price{margin-top:auto;padding-top:12px}
 
@@ -397,6 +405,13 @@ p,.lead{text-wrap:pretty}
 .prod .p-pad{padding:18px;display:flex;flex-direction:column;flex:1}
 .prod h3{font-size:16px;line-height:1.2;margin:0 0 6px}
 .prod .meta{font-size:12px;color:var(--muted)}
+/* Варианты одного товара — разные производители, фасовка и состояние.
+   Раньше каждый вариант был отдельной карточкой с тем же кадром, и ряд
+   превращался в четыре одинаковые фотографии. Теперь это строки прайса
+   внутри одной карточки: маркеров нет, различает их отбивка. */
+.vars{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px}
+.vars li{font-size:12px;line-height:1.35;color:var(--muted)}
+.vars li+li{padding-top:5px;border-top:1px solid var(--line)}
 .prod .price{font-weight:700;margin-top:10px;font-family:var(--serif)}
 .prod .link{margin-top:14px;padding-top:0}
 
@@ -460,7 +475,8 @@ p,.lead{text-wrap:pretty}
    позже, чем ломается сетка карточек. */
 @media(max-width:1180px){.cats{grid-template-columns:repeat(4,1fr)}}
 @media(max-width:1080px){.cat-main .cat-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:820px){.cat-main .cat-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:820px){.cat-main .cat-grid{grid-template-columns:repeat(2,1fr)}
+  .cat-grid.few .prod{grid-column:span 2}}
 @media(max-width:900px){
   .cats{grid-template-columns:repeat(3,1fr);margin-bottom:30px}
   .cat-main{padding-top:24px}
@@ -472,5 +488,7 @@ p,.lead{text-wrap:pretty}
 @media(max-width:540px){
   .cats{grid-template-columns:repeat(2,1fr)}
   .cat-main .cat-grid{grid-template-columns:1fr}
+  .cat-grid.few .prod{grid-column:auto;flex-direction:column}
+  .cat-grid.few .prod .ph{flex:none;aspect-ratio:4/3;min-height:0;border-bottom:1px solid var(--line);border-right:0}
   .cat-bar{flex-direction:column;align-items:flex-start;gap:14px}
 }
