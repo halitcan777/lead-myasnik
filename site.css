@@ -276,8 +276,13 @@ p,.lead{text-wrap:pretty}
 .cat[aria-selected="true"] .cat-ph{background:#fcfcfd}
 
 .cat-main{min-width:0;padding-top:26px;border-top:1px solid var(--line)}
-.cat-bar{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding-bottom:18px;margin-bottom:26px;border-bottom:1px solid var(--line)}
-.cat-bar h2{font-size:30px;letter-spacing:-1px}
+/* Название категории и сортировка выравниваются по верхней строке:
+   при выравнивании по низу селект уезжал под подпись «N позиций». */
+.cat-bar{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding-bottom:18px;margin-bottom:26px;border-bottom:1px solid var(--line)}
+/* line-height по умолчанию (1.5) давал заголовку высокую коробку с пустым
+   полем сверху — визуально название висело ниже селекта при одинаковом
+   верхе. Прижимаем строку к тексту. */
+.cat-bar h2{font-size:30px;letter-spacing:-1px;line-height:1.12}
 .cat-bar .n{margin-top:5px;font-size:13px;color:var(--muted)}
 .sortby{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);white-space:nowrap}
 .sortby select{height:44px;padding:0 12px;border:1px solid var(--line);border-radius:var(--radius-sm);background:#fff;color:var(--ink);font-weight:700}
