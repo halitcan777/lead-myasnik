@@ -73,15 +73,15 @@ p,.lead{text-wrap:pretty}
    логотипа. Знак заметно меньше надписи по высоте, иначе в строке шапки
    он перевешивает название. Размеры задаются только высотой, ширина
    идёт из пропорций исходника. */
-.logo{display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--ink)}
-.logo-mark{height:28px;width:auto;display:block;flex:none}
+.logo{display:flex;flex-direction:column;align-items:center;gap:5px;color:var(--ink)}
+.logo-mark{height:23px;width:auto;display:block;flex:none}
 .logo-w{display:block}
 .logo-w img{height:15px;width:auto;display:block}
 /* Шапка читается как два блока: слева знак и меню при нём, справа —
    контактный блок из телефона и кнопки. Меню стоит сразу за логотипом
    (40px), внутри меню 26px, внутри контактов 20px, а весь свободный
    остаток уходит между группами. Вертикальных разделителей нет намеренно. */
-.nav{display:flex;gap:26px;margin-left:40px;font-size:15px;font-weight:600}
+.nav{display:flex;gap:26px;margin-left:32px;font-size:15px;font-weight:600}
 .nav a{padding-bottom:5px;border-bottom:2px solid transparent}
 .nav a[aria-current="page"]{border-bottom-color:var(--brand)}
 .header-in .phone{margin-left:auto}
