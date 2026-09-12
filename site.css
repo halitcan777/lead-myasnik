@@ -221,17 +221,17 @@ p,.lead{text-wrap:pretty}
 .foot-bottom{border-top:1px solid var(--line);margin-top:40px;padding-top:18px;color:var(--muted);font-size:12px;display:flex;justify-content:space-between}
 
 
-/* ---- Правовой блок футера и страница-документ ---------------------------
-   Требования 152-ФЗ живут отдельной строкой над копирайтом: ссылки на
-   политику и согласие плюс оговорка про оферту. Строка отделена линией
-   во всю ширину — как и все остальные разделители на сайте. */
-.foot-legal{display:grid;grid-template-columns:1.25fr 2fr;gap:35px;margin-top:40px;padding-top:26px;border-top:1px solid var(--line)}
-.fl-links{display:flex;flex-direction:column}
-.fl-note{max-width:640px;margin:0;color:var(--muted);font-size:13px;line-height:1.55}
+/* ---- Правовой текст в футере и страница-документ ------------------------
+   Требования 152-ФЗ не выносим отдельной полосой — это читалось вторым
+   подвалом. Ссылки на документы живут в колонке «Компания», оговорка про
+   оферту — в нижней строке над копирайтом, под той же линией. */
+.foot-bottom{display:block}
+.fb-note{max-width:900px;margin:0 0 14px;line-height:1.6}
+.fb-row{display:flex;justify-content:space-between;gap:20px}
 /* .footer a{display:block} делает ссылку внутри абзаца отдельной строкой —
    в сплошном тексте оговорки она должна оставаться в строке. */
-.fl-note a{display:inline;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
-.fl-note a:hover{color:var(--brand)}
+.fb-note a{display:inline;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.fb-note a:hover{color:var(--brand)}
 .form-consent{grid-column:1/-1;margin:2px 0 0;color:var(--muted);font-size:12px;line-height:1.5}
 .form-consent a{display:inline;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
 .form-consent a:hover{color:var(--brand)}
@@ -313,7 +313,7 @@ p,.lead{text-wrap:pretty}
   .mobile-nav.open{display:grid;padding:15px 0 25px;gap:14px}
 }
 @media(max-width:900px){
-  .foot-legal{grid-template-columns:1fr;gap:22px}
+  .fb-row{flex-direction:column;gap:8px}
   .c-row{grid-template-columns:1fr;gap:6px;padding:14px 0}
   .cta .form{padding:22px}
   .cta .form .title{font-size:28px}
