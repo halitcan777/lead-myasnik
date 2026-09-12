@@ -66,19 +66,23 @@ p,.lead{text-wrap:pretty}
 .topbar .wrap{height:34px;display:flex;align-items:center;justify-content:space-between;letter-spacing:.3px}
 .header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
 .header-in{height:88px;display:flex;align-items:center}
-.logo{font-size:24px;font-weight:900;letter-spacing:-1px;line-height:.85;color:var(--ink)}
-.logo small{display:block;font-size:9px;letter-spacing:1.7px;margin-top:7px;font-weight:600;color:var(--muted)}
-/* Лого — двухэтажный лок-ап: название и подпись под ним. Если центрировать
-   блок целиком, слово «МЯСНИК» уезжает выше строки меню ровно на высоту
-   подписи. Зеркальный отступ сверху (высота подписи + её отбивка) делает
-   блок симметричным относительно названия — и центрирование ставит
-   название на одну линию с меню и телефоном. */
-.header-in .logo{padding-top:15px}
+/* Фирменный лок-ап: знак слева, надпись справа, под ней дескриптор.
+   Знак и надпись — куски одного исходного логотипа, поэтому масштабируются
+   только по высоте, ширина идёт из пропорций. */
+.logo{display:flex;align-items:center;gap:13px;color:var(--ink)}
+.logo-mark{height:42px;width:auto;display:block;flex:none}
+/* Надпись логотипа — двухэтажная: сама надпись и дескриптор под ней.
+   Зеркальный отступ сверху (высота дескриптора с отбивкой) ставит саму
+   надпись на ту же линию, что меню и телефон; знак при этом остаётся
+   отцентрованным сам по себе. */
+.logo-w{display:block;padding-top:17px}
+.logo-w img{height:19px;width:auto;display:block}
+.logo small{display:block;margin-top:6px;font-size:9px;letter-spacing:1.7px;font-weight:600;color:var(--muted)}
 /* Шапка читается как два блока: слева знак и меню при нём, справа —
    контактный блок из телефона и кнопки. Меню стоит сразу за логотипом
    (40px), внутри меню 26px, внутри контактов 20px, а весь свободный
    остаток уходит между группами. Вертикальных разделителей нет намеренно. */
-.nav{display:flex;gap:26px;margin-left:40px;font-size:14px;font-weight:600}
+.nav{display:flex;gap:26px;margin-left:40px;font-size:15px;font-weight:600}
 .nav a{padding-bottom:5px;border-bottom:2px solid transparent}
 .nav a[aria-current="page"]{border-bottom-color:var(--brand)}
 .header-in .phone{margin-left:auto}
@@ -212,7 +216,8 @@ p,.lead{text-wrap:pretty}
 
 /* ---- Футер ------------------------------------------------------------------ */
 .footer{background:#fff;color:var(--ink);padding:55px 0 28px;border-top:1px solid var(--line)}
-.footer .logo{color:var(--ink)}
+.footer .logo{color:var(--ink);margin-bottom:14px}
+.footer .logo-w{padding-top:0}
 .footer .logo small{color:var(--muted)}
 .footer .phone{display:inline-flex;margin:7px 0}
 .foot-grid{display:grid;grid-template-columns:1.25fr repeat(3,1fr);gap:35px}

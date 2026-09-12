@@ -36,9 +36,16 @@
     function goTo(t,i){var cs=C(t);i=Math.max(0,Math.min(i,cs.length-1));t.scrollBy({left:cs[i].offsetLeft-base(t)-t.scrollLeft,behavior:'smooth'});}
     function buildDots(){var t=A();if(!dotsWrap||!t)return;dotsWrap.innerHTML='';C(t).forEach(function(c,i){var d=document.createElement('button');d.className='dot';d.setAttribute('aria-label','Позиция '+(i+1));d.addEventListener('click',function(){goTo(t,i);restart();});dotsWrap.appendChild(d);});sync();}
     function sync(){var t=A();if(!t)return;var ai=activeIdx(t);if(prev)prev.disabled=t.scrollLeft<=2;if(next)next.disabled=atEnd(t);if(dotsWrap){var ds=dotsWrap.children;for(var i=0;i<ds.length;i++)ds[i].classList.toggle('active',i===ai);}}
-    function play(){stop();timer=setInterval(function(){var t=A();if(!t||hover)return;goTo(t,atEnd(t)?0:stopIdx(t)+1);},4000);}
+    // Автопрокрутка работает, пока витрину не тронули. Как только человек
+    // сам листает — колесом, пальцем или стрелками — таймер выключается
+    // насовсем: иначе он дёргает трек посреди чужого движения.
+    var taken=false;
+    function play(){stop();if(taken)return;timer=setInterval(function(){var t=A();if(!t||hover)return;goTo(t,atEnd(t)?0:stopIdx(t)+1);},4000);}
     function stop(){if(timer){clearInterval(timer);timer=null;}}
     function restart(){play();}
+    ['wheel','touchstart','pointerdown','keydown'].forEach(function(ev){
+      sc.addEventListener(ev,function(){taken=true;stop();},{passive:true});
+    });
     btns.forEach(function(bt){bt.addEventListener('click',function(){btns.forEach(function(x){x.classList.remove('active');});bt.classList.add('active');var tb=bt.getAttribute('data-tab');tracks.forEach(function(tr){tr.hidden=(tr.getAttribute('data-panel')!==tb);if(!tr.hidden)tr.scrollLeft=0;});buildDots();restart();});});
     if(prev)prev.addEventListener('click',function(){var t=A();goTo(t,stopIdx(t)-1);restart();});
     if(next)next.addEventListener('click',function(){var t=A();goTo(t,stopIdx(t)+1);restart();});
