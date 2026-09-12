@@ -81,8 +81,11 @@
     function buildFacets(){
       var d=fbox.querySelector('details'),
           open=d?d.open:(window.innerWidth>900),
-          html='', groups=0;
+          html='', groups=0, small=0;
+      prods.forEach(function(p){if(inCat(p))small++;});
+      // В маленькой категории фильтровать нечего — там всё видно списком.
       FACETS.forEach(function(f){
+        if(small<6)return;
         var key=f[0],counts={},order=[];
         prods.forEach(function(p){
           if(!inCat(p))return;
@@ -90,10 +93,15 @@
           if(!(v in counts)){counts[v]=0;order.push(v);}
           counts[v]++;
         });
-        // Группа бесполезна, только если значение одно и оно есть у всех:
-        // «Без кости (9 из 13)» — рабочий фильтр, «Охлаждённое (3 из 3)» — нет.
+        // Фильтр показываем, только если он реально сужает выдачу:
+        // значение, которое есть у всех — не фильтр («Охлаждённое 3 из 3»);
+        // набор значений по одной позиции — тоже не фильтр, это просто
+        // список тех же карточек другими словами («Приосколье 1, Зори 1»).
         var total=0; prods.forEach(function(p){if(inCat(p))total++;});
         if(!order.length||(order.length===1&&counts[order[0]]===total))return;
+        var grouped=false;
+        order.forEach(function(v){if(counts[v]>1)grouped=true;});
+        if(order.length>1&&!grouped)return;
         groups++;
         html+='<div class="facet"><h4>'+f[1]+'</h4>';
         order.forEach(function(v){
