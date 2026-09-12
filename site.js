@@ -50,84 +50,28 @@
   });
 
 
-  // ---- Каталог: категория-экран, фасетные фильтры, сортировка -------------
+  // ---- Каталог: категория как экран + сортировка ---------------------------
+  // Фильтров нет намеренно: в самой большой категории 19 позиций, всё видно
+  // списком, а фасеты на таком объёме просто пересказывают ту же выдачу.
   var cx = document.querySelector('[data-catalog]');
   if(cx){
     var tiles=[].slice.call(cx.querySelectorAll('.cat')),
         prods=[].slice.call(cx.querySelectorAll('.prod')),
         grid=cx.querySelector('.cat-grid'),
-        fbox=cx.querySelector('[data-facets]'),
         nameEl=cx.querySelector('[data-cat-name]'),
         countEl=cx.querySelector('[data-cat-count]'),
-        emptyEl=cx.querySelector('.cat-empty'),
         sortEl=cx.querySelector('[data-sort]'),
-        FACETS=[['state','Состояние'],['cut','Разделка'],['pack','Фасовка'],['brand','Производитель']],
-        cur=tiles[0].getAttribute('data-cat'), picked={};
+        cur=tiles[0].getAttribute('data-cat');
 
     function plural(n){var a=n%10,b=n%100;
       return (a===1&&b!==11)?'позиция':((a>=2&&a<=4)&&(b<12||b>14))?'позиции':'позиций';}
-    function inCat(p){return p.getAttribute('data-cat')===cur;}
-    function fits(p){
-      for(var k in picked){
-        var vals=picked[k],any=false,ok=false;
-        for(var v in vals){if(vals[v]){any=true;if(p.getAttribute('data-'+k)===v)ok=true;}}
-        if(any&&!ok)return false;
-      }
-      return true;
-    }
-    function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
-    // Фильтры пересобираются под категорию: значения и счётчики у каждой свои,
-    // а группа с единственным значением ничего не фильтрует и не показывается.
-    function buildFacets(){
-      var d=fbox.querySelector('details'),
-          open=d?d.open:(window.innerWidth>900),
-          html='', groups=0, small=0;
-      prods.forEach(function(p){if(inCat(p))small++;});
-      // В маленькой категории фильтровать нечего — там всё видно списком.
-      FACETS.forEach(function(f){
-        if(small<6)return;
-        var key=f[0],counts={},order=[];
-        prods.forEach(function(p){
-          if(!inCat(p))return;
-          var v=p.getAttribute('data-'+key); if(!v)return;
-          if(!(v in counts)){counts[v]=0;order.push(v);}
-          counts[v]++;
-        });
-        // Фильтр показываем, только если он реально сужает выдачу:
-        // значение, которое есть у всех — не фильтр («Охлаждённое 3 из 3»);
-        // набор значений по одной позиции — тоже не фильтр, это просто
-        // список тех же карточек другими словами («Приосколье 1, Зори 1»).
-        var total=0; prods.forEach(function(p){if(inCat(p))total++;});
-        if(!order.length||(order.length===1&&counts[order[0]]===total))return;
-        var grouped=false;
-        order.forEach(function(v){if(counts[v]>1)grouped=true;});
-        if(order.length>1&&!grouped)return;
-        groups++;
-        html+='<div class="facet"><h4>'+f[1]+'</h4>';
-        order.forEach(function(v){
-          html+='<label class="check"><input type="checkbox" data-key="'+key+'" value="'+esc(v)+'">'+
-                '<span>'+esc(v)+'</span><b>'+counts[v]+'</b></label>';
-        });
-        html+='</div>';
-      });
-      fbox.innerHTML = groups
-        ? '<details class="fbox"'+(open?' open':'')+'><summary>Фильтры</summary>'+html+
-          '<button class="facet-reset" type="button" data-reset disabled>Сбросить фильтры</button></details>'
-        : '';
-      // Категории вроде «Яйцо» фильтровать нечем — колонка не должна зиять пустой.
-      cx.querySelector('.cat-layout').classList.toggle('no-facets',!groups);
-    }
     function apply(){
       var n=0;
       prods.forEach(function(p){
-        var show=inCat(p)&&fits(p);
+        var show=p.getAttribute('data-cat')===cur;
         p.hidden=!show; if(show)n++;
       });
       countEl.textContent=n+' '+plural(n);
-      emptyEl.hidden=n>0;
-      var any=false;
-      for(var k in picked){for(var v in picked[k])if(picked[k][v])any=true;}
-      var rst=fbox.querySelector('[data-reset]'); if(rst)rst.disabled=!any;
     }
     function sortNow(){
       var v=sortEl?sortEl.value:'cat', arr=prods.slice();
@@ -141,28 +85,16 @@
       arr.forEach(function(p){grid.appendChild(p);});
     }
     function pick(cid){
-      cur=cid; picked={};
+      cur=cid;
       tiles.forEach(function(b){
         var on=b.getAttribute('data-cat')===cid;
         b.setAttribute('aria-selected',on?'true':'false');
         if(on&&nameEl)nameEl.textContent=b.getAttribute('data-name');
       });
-      buildFacets(); apply();
+      apply();
     }
     tiles.forEach(function(b){
       b.addEventListener('click',function(){pick(b.getAttribute('data-cat'));});
-    });
-    fbox.addEventListener('change',function(e){
-      var i=e.target; if(!i.getAttribute||!i.getAttribute('data-key'))return;
-      var k=i.getAttribute('data-key');
-      picked[k]=picked[k]||{}; picked[k][i.value]=i.checked;
-      apply();
-    });
-    fbox.addEventListener('click',function(e){
-      if(!e.target.hasAttribute||!e.target.hasAttribute('data-reset'))return;
-      picked={};
-      [].slice.call(fbox.querySelectorAll('input')).forEach(function(i){i.checked=false;});
-      apply();
     });
     if(sortEl)sortEl.addEventListener('change',sortNow);
     // Старые ссылки вида katalog.html#cat5 продолжают открывать свою категорию.
