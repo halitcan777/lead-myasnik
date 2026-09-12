@@ -42,8 +42,12 @@
 }
 
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-html,body{overflow-x:hidden}
+/* scroll-padding — чтобы якорные ссылки не заезжали под липкую шапку. */
+html{scroll-behavior:smooth;scroll-padding-top:100px}
+/* Именно clip, а не hidden: hidden делает html/body контейнером прокрутки,
+   и position:sticky у шапки перестаёт держаться за экран. clip режет
+   горизонтальный вылет так же, но контейнер прокрутки не создаёт. */
+html,body{overflow-x:clip}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5}
 a{color:inherit;text-decoration:none}
 button,input,select,textarea{font:inherit}
@@ -77,10 +81,10 @@ p,.lead{text-wrap:pretty}
    надпись уезжает ниже строки меню на высоту знака. Зеркальный отступ
    снизу (знак + отбивка) возвращает надпись на общую линию с меню,
    телефоном и кнопкой, а знак остаётся значком над строкой. */
-.logo{display:flex;flex-direction:column;align-items:center;gap:4px;padding-bottom:20px;color:var(--ink)}
-.logo-mark{height:16px;width:auto;display:block;flex:none}
+.logo{display:flex;align-items:center;gap:10px;color:var(--ink)}
+.logo-mark{height:26px;width:auto;display:block;flex:none;order:2}
 .logo-w{display:block}
-.logo-w img{height:26px;width:auto;display:block}
+.logo-w img{height:21px;width:auto;display:block}
 /* Шапка читается как два блока: слева знак и меню при нём, справа —
    контактный блок из телефона и кнопки. Меню стоит сразу за логотипом
    (40px), внутри меню 26px, внутри контактов 20px, а весь свободный
@@ -215,7 +219,7 @@ p,.lead{text-wrap:pretty}
 
 /* ---- Футер ------------------------------------------------------------------ */
 .footer{background:#fff;color:var(--ink);padding:55px 0 28px;border-top:1px solid var(--line)}
-.footer .logo{color:var(--ink);align-items:flex-start;padding-bottom:0;margin-bottom:16px}
+.footer .logo{color:var(--ink);margin-bottom:16px}
 .footer .logo small{color:var(--muted)}
 .footer .phone{display:inline-flex;margin:7px 0}
 .foot-grid{display:grid;grid-template-columns:1.25fr repeat(3,1fr);gap:35px}
@@ -326,6 +330,7 @@ p,.lead{text-wrap:pretty}
   .burger{display:block}
   .mobile-nav.open{display:grid;padding:15px 0 25px;gap:14px}
 }
+
 @media(max-width:900px){
   .fb-row{flex-direction:column;gap:8px}
   .c-row{grid-template-columns:1fr;gap:6px;padding:14px 0}
@@ -490,3 +495,21 @@ p,.lead{text-wrap:pretty}
   .cat-grid.few .prod .ph{flex:none;aspect-ratio:4/3;min-height:0;border-bottom:1px solid var(--line);border-right:0}
   .cat-bar{flex-direction:column;align-items:flex-start;gap:14px}
 }
+
+@media(max-width:900px){
+  /* Пальцем попасть: на телефоне зона нажатия у ссылок, стрелок и точек
+     карусели должна быть заметно больше самой надписи. Растим отбивкой,
+     а не размером текста — рисунок страницы не меняется. */
+  .mobile-nav a{padding:9px 0}
+  .footer a{margin:0;padding:8px 0}
+  .footer .phone{margin:2px 0}
+  .prod .link{padding:10px 0}
+  .cctrl{gap:16px}
+  .cctrl .cnav{padding:11px}
+  .dot{position:relative}
+  .dot::after{content:"";position:absolute;inset:-16px}
+  /* Кнопки действия на узком экране — во всю ширину, в столбик. */
+  .actions .button,.hero .actions .button,.page-hero .actions .button{width:100%}
+}
+
+@media(max-width:900px){html{scroll-padding-top:84px}}
