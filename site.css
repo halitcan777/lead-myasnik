@@ -228,14 +228,18 @@ p,.lead{text-wrap:pretty}
 .foot-legal{display:grid;grid-template-columns:1.25fr 2fr;gap:35px;margin-top:40px;padding-top:26px;border-top:1px solid var(--line)}
 .fl-links{display:flex;flex-direction:column}
 .fl-note{max-width:640px;margin:0;color:var(--muted);font-size:13px;line-height:1.55}
-.fl-note a{text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+/* .footer a{display:block} делает ссылку внутри абзаца отдельной строкой —
+   в сплошном тексте оговорки она должна оставаться в строке. */
+.fl-note a{display:inline;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
 .fl-note a:hover{color:var(--brand)}
 .form-consent{grid-column:1/-1;margin:2px 0 0;color:var(--muted);font-size:12px;line-height:1.5}
-.form-consent a{text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.form-consent a{display:inline;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
 .form-consent a:hover{color:var(--brand)}
 
-/* Страница-документ: одна колонка текста, ширина по строке, а не по сетке. */
-.doc{max-width:760px}
+/* Страница-документ: длину строки ограничиваем у самих абзацев, а не у
+   обёртки — иначе .wrap со своим margin:auto утащит весь текст в центр
+   страницы, и левый край разъедется с остальными страницами. */
+.doc h2,.doc p{max-width:760px}
 .doc h2{margin:38px 0 12px;font-size:24px;letter-spacing:-.6px}
 .doc h2:first-child{margin-top:0}
 .doc p{margin:0 0 14px;color:var(--ink)}
@@ -352,7 +356,6 @@ p,.lead{text-wrap:pretty}
 .clients-head{margin-top:58px}
 
 /* ================= МНОГОСТРАНИЧНИК ================= */
-.nav a.active{color:var(--ink)}
 .nav a.active::after{content:"";display:block;height:2px;background:var(--brand);margin-top:5px}
 .center{text-align:center;margin-top:34px}
 .ph-kick,.st-kick{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--brand);margin-bottom:14px}
