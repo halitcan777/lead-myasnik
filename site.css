@@ -74,14 +74,14 @@ p,.lead{text-wrap:pretty}
    блок симметричным относительно названия — и центрирование ставит
    название на одну линию с меню и телефоном. */
 .header-in .logo{padding-top:15px}
-/* Шапка читается как два блока, а не как шесть отдельных ссылок: меню —
-   отдельно, телефон и кнопка — один контактный блок. Группы разделяет
-   только расстояние: внутри меню 26px, внутри контактов 20px, между
-   группами 52px. Вертикальных разделителей нет намеренно. */
-.nav{display:flex;gap:26px;margin-left:auto;font-size:14px;font-weight:600}
+/* Шапка читается как два блока: слева знак и меню при нём, справа —
+   контактный блок из телефона и кнопки. Меню стоит сразу за логотипом
+   (40px), внутри меню 26px, внутри контактов 20px, а весь свободный
+   остаток уходит между группами. Вертикальных разделителей нет намеренно. */
+.nav{display:flex;gap:26px;margin-left:40px;font-size:14px;font-weight:600}
 .nav a{padding-bottom:5px;border-bottom:2px solid transparent}
 .nav a[aria-current="page"]{border-bottom-color:var(--brand)}
-.header-in .phone{margin-left:52px}
+.header-in .phone{margin-left:auto}
 .header-in .button{margin-left:20px}
 .phone{display:inline-flex;align-items:center;gap:8px;font-weight:800;white-space:nowrap}
 .phone .icon-sm{color:inherit}
@@ -231,12 +231,15 @@ p,.lead{text-wrap:pretty}
    Все карточки лежат в разметке сразу — скрипт их показывает и прячет,
    ничего не догружая и не ломая работу без JS (тогда видно всё). */
 .cats{display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line);margin-bottom:46px}
-.cat{border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff;padding:0;margin:0;cursor:pointer;color:var(--ink);font:inherit;text-align:left;display:flex;flex-direction:column}
+/* min-width:0 обязателен: у ячейки грида минимальная ширина по умолчанию
+   равна ширине содержимого, а внутри лежит кадр 1536px — без этого
+   сетка распирает страницу на узком экране, и текст уезжает за край. */
+.cat{min-width:0;border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff;padding:0;margin:0;cursor:pointer;color:var(--ink);font:inherit;text-align:left;display:flex;flex-direction:column}
 .cat-ph{aspect-ratio:4/3;background:#fff;overflow:hidden}
-.cat-ph img{width:100%;height:100%;object-fit:contain;display:block}
+.cat-ph img{width:100%;max-width:100%;height:100%;object-fit:contain;display:block}
 /* min-height — чтобы подпись в две строки («Куриные полуфабрикаты»)
    не делала свою плитку выше соседних: ряд должен читаться линией. */
-.cat-t{display:flex;align-items:baseline;justify-content:space-between;gap:10px;min-height:57px;padding:12px 14px;border-top:1px solid var(--line);font-size:13px;font-weight:700;line-height:1.25}
+.cat-t{min-width:0;display:flex;align-items:baseline;justify-content:space-between;gap:10px;min-height:57px;padding:12px 14px;border-top:1px solid var(--line);font-size:13px;font-weight:700;line-height:1.25}
 .cat-t b{font-size:12px;font-weight:700;color:var(--muted)}
 .cat:hover .cat-t{color:var(--brand)}
 /* Выбранная категория — заливкой, а не рамкой: рамки тут и так везде. */
