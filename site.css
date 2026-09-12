@@ -73,7 +73,11 @@ p,.lead{text-wrap:pretty}
    логотипа. Знак заметно меньше надписи по высоте, иначе в строке шапки
    он перевешивает название. Размеры задаются только высотой, ширина
    идёт из пропорций исходника. */
-.logo{display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--ink)}
+/* Знак стоит НАД надписью, поэтому при центровании всего лок-апа сама
+   надпись уезжает ниже строки меню на высоту знака. Зеркальный отступ
+   снизу (знак + отбивка) возвращает надпись на общую линию с меню,
+   телефоном и кнопкой, а знак остаётся значком над строкой. */
+.logo{display:flex;flex-direction:column;align-items:center;gap:4px;padding-bottom:20px;color:var(--ink)}
 .logo-mark{height:16px;width:auto;display:block;flex:none}
 .logo-w{display:block}
 .logo-w img{height:26px;width:auto;display:block}
@@ -211,7 +215,7 @@ p,.lead{text-wrap:pretty}
 
 /* ---- Футер ------------------------------------------------------------------ */
 .footer{background:#fff;color:var(--ink);padding:55px 0 28px;border-top:1px solid var(--line)}
-.footer .logo{color:var(--ink);align-items:flex-start;margin-bottom:16px}
+.footer .logo{color:var(--ink);align-items:flex-start;padding-bottom:0;margin-bottom:16px}
 .footer .logo small{color:var(--muted)}
 .footer .phone{display:inline-flex;margin:7px 0}
 .foot-grid{display:grid;grid-template-columns:1.25fr repeat(3,1fr);gap:35px}
