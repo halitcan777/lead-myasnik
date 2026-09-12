@@ -29,7 +29,11 @@
     // Для точек-индикаторов правый край — это последняя карточка: она
     // видна целиком, хотя к левому краю трек её уже не подтягивает.
     function activeIdx(t){return atEnd(t)?C(t).length-1:nearIdx(t);}
-    function goTo(t,i){var cs=C(t);i=Math.max(0,Math.min(i,cs.length-1));t.scrollTo({left:cs[i].offsetLeft-base(t),behavior:'smooth'});}
+    // Сдвиг делается относительным, а не абсолютным: в контейнере со
+    // scroll-snap-type:mandatory Chrome глушит scrollTo к позиции левее
+    // текущей приклеенной карточки — трек просто остаётся на месте.
+    // scrollBy на ту же дельту отрабатывает нормально.
+    function goTo(t,i){var cs=C(t);i=Math.max(0,Math.min(i,cs.length-1));t.scrollBy({left:cs[i].offsetLeft-base(t)-t.scrollLeft,behavior:'smooth'});}
     function buildDots(){var t=A();if(!dotsWrap||!t)return;dotsWrap.innerHTML='';C(t).forEach(function(c,i){var d=document.createElement('button');d.className='dot';d.setAttribute('aria-label','Позиция '+(i+1));d.addEventListener('click',function(){goTo(t,i);restart();});dotsWrap.appendChild(d);});sync();}
     function sync(){var t=A();if(!t)return;var ai=activeIdx(t);if(prev)prev.disabled=t.scrollLeft<=2;if(next)next.disabled=atEnd(t);if(dotsWrap){var ds=dotsWrap.children;for(var i=0;i<ds.length;i++)ds[i].classList.toggle('active',i===ai);}}
     function play(){stop();timer=setInterval(function(){var t=A();if(!t||hover)return;goTo(t,atEnd(t)?0:stopIdx(t)+1);},4000);}
